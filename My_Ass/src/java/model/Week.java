@@ -2,11 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package model.assignment;
+package model;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import util.DateTimeHelper;
 
 /**
  *
@@ -67,26 +68,16 @@ public class Week {
         return getDayMonthFormat(from) + " To " + getDayMonthFormat(To);
     }
 
-    public static Date removeTime(Date date) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        cal.set(Calendar.HOUR_OF_DAY, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-        return cal.getTime();
-    }
-
-    public int contains(Date date) {
-        if ((from.before(date) && To.after(date)) || removeTime(from).equals(removeTime(date)) || removeTime(To).equals(removeTime(date))) {
-            Calendar cFrom = Calendar.getInstance();
-            cFrom.setTime(from);
-            Calendar cDate = Calendar.getInstance();
-            cDate.setTime(date);
-            return cDate.get(Calendar.DATE) - cFrom.get(Calendar.DATE) + 2;
-        }
-        return -1;
-    }
+//    public int contains(Date date) {
+//        if ((from.before(date) && To.after(date)) || removeTime(from).equals(removeTime(date)) || removeTime(To).equals(removeTime(date))) {
+//            Calendar cFrom = Calendar.getInstance();
+//            cFrom.setTime(from);
+//            Calendar cDate = Calendar.getInstance();
+//            cDate.setTime(date);
+//            return cDate.get(Calendar.DATE) - cFrom.get(Calendar.DATE) + 2;
+//        }
+//        return -1;
+//    }
 
     public ArrayList<String> listDetail() {
         ArrayList<String> list = new ArrayList<>();
@@ -99,5 +90,23 @@ public class Week {
             calendar.add(Calendar.DATE, 1);
         }
         return list;
+    }
+    
+    public ArrayList<Date> getDayList(){
+        ArrayList<Date> list = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(from);
+        for (int i = 0; i < 7; i++) {
+            Date day = DateTimeHelper.removeTime(calendar.getTime()) ;
+            list.add(day);
+            calendar.add(Calendar.DATE, 1);
+        }
+        return list;
+    }
+    
+    public int getIndexWeekOfYear(){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(from);
+        return calendar.get(Calendar.WEEK_OF_YEAR) - 1;
     }
 }

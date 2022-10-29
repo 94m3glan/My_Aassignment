@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package model.assignment;
+package model;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 
 /**
@@ -20,7 +20,7 @@ public class Session {
     private Group group;
     private int index;
     private boolean attandated; 
-    private ArrayList<Attandance> attandances = new ArrayList<>();
+    private ArrayList<Attendance> attandances = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -55,6 +55,7 @@ public class Session {
     }
 
     public Date getDate() {
+        
         return date;
     }
 
@@ -86,12 +87,17 @@ public class Session {
         this.attandated = attandated;
     }
 
-    public ArrayList<Attandance> getAttandances() {
+    public ArrayList<Attendance> getAttandances() {
         return attandances;
     }
 
-    public void setAttandances(ArrayList<Attandance> attandances) {
+    public void setAttandances(ArrayList<Attendance> attandances) {
         this.attandances = attandances;
+    }
+
+    @Override
+    public String toString() {
+        return "Session{" + "id=" + id + ", lecturer=" + lecturer + ", room=" + room + ", timeslot=" + timeslot + ", date=" + date + ", group=" + group + ", index=" + index + ", attandated=" + attandated + ", attandances=" + attandances + '}';
     }
     
 }

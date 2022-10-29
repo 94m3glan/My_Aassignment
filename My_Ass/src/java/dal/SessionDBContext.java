@@ -2,21 +2,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package dal.assignment;
+package dal;
 
-import java.sql.Date;
+import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.assignment.Group;
-import model.assignment.Lecturer;
-import model.assignment.Room;
-import model.assignment.Session;
-import model.assignment.Subject;
-import model.assignment.TimeSlot;
+import model.Attendance;
+import model.Group;
+import model.Lecturer;
+import model.Room;
+import model.Session;
+import model.Subject;
+import model.TimeSlot;
+import util.DateTimeHelper;
 
 /**
  *
@@ -46,43 +50,42 @@ public class SessionDBContext extends DBContext<Session> {
                     + "AND ses.[date] <= ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, lid);
-            stm.setDate(2, from);
-            stm.setDate(3, to);
+            stm.setDate(2, new java.sql.Date(DateTimeHelper.removeTime(from).getTime()));
+            stm.setDate(3, new java.sql.Date(DateTimeHelper.removeTime(to).getTime()));
             ResultSet rs = stm.executeQuery();
-            while(rs.next())
-            {
+            while (rs.next()) {
                 Session session = new Session();
                 Lecturer l = new Lecturer();
                 Room r = new Room();
                 Group g = new Group();
                 TimeSlot t = new TimeSlot();
                 Subject sub = new Subject();
-                
+
                 session.setId(rs.getInt("sesid"));
                 session.setDate(rs.getDate("date"));
                 session.setIndex(rs.getInt("index"));
                 session.setAttandated(rs.getBoolean("attanded"));
-                
+
                 l.setId(rs.getInt("lid"));
                 l.setName(rs.getString("lname"));
                 session.setLecturer(l);
-                
+
                 g.setId(rs.getInt("gid"));
                 g.setName(rs.getString("gname"));
                 session.setGroup(g);
-                
+
                 sub.setId(rs.getInt("subid"));
                 sub.setName(rs.getString("subname"));
                 g.setSubject(sub);
-                
+
                 r.setId(rs.getInt("rid"));
                 r.setName(rs.getString("rname"));
                 session.setRoom(r);
-                
+
                 t.setId(rs.getInt("tid"));
                 t.setDescription(rs.getString("description"));
                 session.setTimeslot(t);
-                
+
                 sessions.add(session);
             }
         } catch (SQLException ex) {
@@ -111,9 +114,67 @@ public class SessionDBContext extends DBContext<Session> {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    public ArrayList<Session> get(int stdid, Date from, Date to) {
+        ArrayList<Session> sessions = new ArrayList<>();
+        int i = 0;
+        try {
+            String statement = "SELECT ses.sesid, gr.gname, r.rname, at.present, ts.tid, ts.description, ses.date  \n"
+                    + "								   FROM Session ses join [Group] gr on ses.gid = gr.gid\n"
+                    + "								   join Room r on ses.rid = r.rid\n"
+                    + "								   join TimeSlot ts on ses.tid = ts.tid\n"
+                    + "								   join Attandance at on ses.sesid = at.sesid\n"
+                    + "								   where at.stdid = ? and ses.date between ? and ?";
+            PreparedStatement pstm = connection.prepareStatement(statement);
+            pstm.setInt(1, stdid);
+            pstm.setDate(2, new java.sql.Date(DateTimeHelper.removeTime(from).getTime()));
+            pstm.setDate(3, new java.sql.Date(DateTimeHelper.removeTime(to).getTime()));
+            ResultSet rs = pstm.executeQuery();
+            while (rs.next()) {
+                i++;
+                Session ses = new Session();
+                Room r = new Room();
+                TimeSlot ts = new TimeSlot();
+                Group gr = new Group();
+                Attendance att = new Attendance();
+                
+                ses.setId(rs.getInt("sesid"));
+                ses.setDate( new java.util.Date(DateTimeHelper.removeTime(rs.getDate("date")).getTime()));
+                
+                gr.setName(rs.getString("gname"));
+                ses.setGroup(gr);
+                
+                r.setName(rs.getString("rname"));
+                ses.setRoom(r);
+                
+                ts.setId(rs.getInt("tid"));
+                ts.setDescription(rs.getString("description"));
+                ses.setTimeslot(ts);
+                
+                att.setPresent(rs.getBoolean("present"));
+                ses.getAttandances().add(att);
+                
+                sessions.add(ses);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SessionDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println("count: " + i);
+        return sessions;
+    }
+
     @Override
     public ArrayList<Session> list() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+    public static void main(String[] args) throws ParseException{
+        SessionDBContext ssdb = new SessionDBContext();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        ArrayList<Session> sessions = ssdb.get(1, sdf.parse("17/10/2022"), sdf.parse("23/10/2022"));
+        
+        for(Session ses : sessions){
+            System.out.println(ses);
+        }
     }
 
 }
