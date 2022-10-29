@@ -8,6 +8,14 @@
         <servlet-name>timetableView</servlet-name>
         <jsp-file>/view/student/timetable.jsp</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>AttendanceRpController</servlet-name>
+        <servlet-class>controller.student.AttendanceReport</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AttendanceRpView</servlet-name>
+        <jsp-file>/view/student/AttendanceReport.jsp</jsp-file>
+    </servlet>
     <servlet-mapping>
         <servlet-name>timetableController</servlet-name>
         <url-pattern>/student/timetable</url-pattern>
@@ -15,6 +23,14 @@
     <servlet-mapping>
         <servlet-name>timetableView</servlet-name>
         <url-pattern>/student/timetable/view</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AttendanceRpController</servlet-name>
+        <url-pattern>/student/Report/Attendance</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AttendanceRpView</servlet-name>
+        <url-pattern>/student/Report/Attendance/view</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

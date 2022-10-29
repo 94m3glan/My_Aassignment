@@ -116,7 +116,7 @@ public class SessionDBContext extends DBContext<Session> {
 
     public ArrayList<Session> get(int stdid, Date from, Date to) {
         ArrayList<Session> sessions = new ArrayList<>();
-        int i = 0;
+       
         try {
             String statement = "SELECT ses.sesid, gr.gname, r.rname, at.present, ts.tid, ts.description, ses.date  \n"
                     + "								   FROM Session ses join [Group] gr on ses.gid = gr.gid\n"
@@ -130,7 +130,7 @@ public class SessionDBContext extends DBContext<Session> {
             pstm.setDate(3, new java.sql.Date(DateTimeHelper.removeTime(to).getTime()));
             ResultSet rs = pstm.executeQuery();
             while (rs.next()) {
-                i++;
+             
                 Session ses = new Session();
                 Room r = new Room();
                 TimeSlot ts = new TimeSlot();
@@ -158,7 +158,7 @@ public class SessionDBContext extends DBContext<Session> {
         } catch (SQLException ex) {
             Logger.getLogger(SessionDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println("count: " + i);
+ 
         return sessions;
     }
 
@@ -167,14 +167,14 @@ public class SessionDBContext extends DBContext<Session> {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
-    public static void main(String[] args) throws ParseException{
-        SessionDBContext ssdb = new SessionDBContext();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        ArrayList<Session> sessions = ssdb.get(1, sdf.parse("17/10/2022"), sdf.parse("23/10/2022"));
-        
-        for(Session ses : sessions){
-            System.out.println(ses);
-        }
-    }
+//    public static void main(String[] args) throws ParseException{
+//        SessionDBContext ssdb = new SessionDBContext();
+//        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//        ArrayList<Session> sessions = ssdb.get(1, sdf.parse("17/10/2022"), sdf.parse("23/10/2022"));
+//        
+//        for(Session ses : sessions){
+//            System.out.println(ses);
+//        }
+//    }
 
 }

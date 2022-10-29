@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class Subject {
     private int id;
     private String name;
+    private String description;
     private ArrayList<Group> groups = new ArrayList<>();
 
     public int getId() {
@@ -29,6 +30,14 @@ public class Subject {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public ArrayList<Group> getGroups() {

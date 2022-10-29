@@ -12,8 +12,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import model.Session;
@@ -29,15 +27,14 @@ import util.DateTimeHelper;
 public class timetable extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException {
+       ; // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int stdid = Integer.parseInt(req.getParameter("stdid"));
         String paramWeek = req.getParameter("week");
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         ArrayList<Week> weeks = DateTimeHelper.getAllWeek();
 
         TimeSlotDBContext tsdb = new TimeSlotDBContext();
@@ -54,7 +51,7 @@ public class timetable extends HttpServlet {
             indexWeek = Integer.parseInt(paramWeek);
         }
         Week currentWeek = DateTimeHelper.getWeekTime(indexWeek);
-        ArrayList<String> daysOfWeek = currentWeek.listDetail();
+        ArrayList<String> daysOfWeek = currentWeek.toStringValues();
 
         SessionDBContext ssdb = new SessionDBContext();
         ArrayList<Session> sessions = ssdb.get(stdid, new Date(currentWeek.getFrom().getTime()), new Date(currentWeek.getTo().getTime()));
@@ -70,22 +67,23 @@ public class timetable extends HttpServlet {
     }
 
 //    public static void main(String[] args) throws ParseException {
-//        Date now = new Date();
-//        int indexCurrentWeek = DateTimeHelper.getWeekOfYear(now);
-//        Week currentWeek = DateTimeHelper.getWeekTime(indexCurrentWeek - 1);
+////        Date now = new Date();
+////        int indexCurrentWeek = DateTimeHelper.getWeekOfYear(now);
+////        Week currentWeek = DateTimeHelper.getWeekTime(indexCurrentWeek - 1);
 //        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 //        SessionDBContext ssdb = new SessionDBContext();
-//
+////
 //        ArrayList<Session> sessions = ssdb.get(1, sdf.parse("17/10/2022"), sdf.parse("23/10/2022"));
-////        
-//        ArrayList<Date> dayList = currentWeek.getDayList();
-//        for (Date dayList1 : dayList) {
-//            System.out.println(dayList1);
-//        }
-//
+//////        
+////        ArrayList<Date> dayList = currentWeek.getDayList();
+////        for (Date dayList1 : dayList) {
+////            System.out.println(dayList1);
+////        }
+////
 //        for (Session ses : sessions) {
-//            System.out.println(ses);
+//            System.out.println(ses.getAttandances().get(0).isPresent());
 //        }
+//        
 //    }
 
 }

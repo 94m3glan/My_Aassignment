@@ -68,18 +68,8 @@ public class Week {
         return getDayMonthFormat(from) + " To " + getDayMonthFormat(To);
     }
 
-//    public int contains(Date date) {
-//        if ((from.before(date) && To.after(date)) || removeTime(from).equals(removeTime(date)) || removeTime(To).equals(removeTime(date))) {
-//            Calendar cFrom = Calendar.getInstance();
-//            cFrom.setTime(from);
-//            Calendar cDate = Calendar.getInstance();
-//            cDate.setTime(date);
-//            return cDate.get(Calendar.DATE) - cFrom.get(Calendar.DATE) + 2;
-//        }
-//        return -1;
-//    }
 
-    public ArrayList<String> listDetail() {
+    public ArrayList<String> toStringValues() {
         ArrayList<String> list = new ArrayList<>();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(from);

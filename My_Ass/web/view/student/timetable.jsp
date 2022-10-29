@@ -12,11 +12,12 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <link rel="stylesheet" href="../css/timetable_style.css"/>
+    
 
         <script>
             function changeWeek() {
                 var x = document.getElementById("weeks").value;
-                window.location.href = '?stdid='+${requestScope.student.getId()}+'&week='+x;
+                window.location.href = '?stdid=' +${requestScope.student.getId()} + '&week=' + x;
             }
         </script>
     </head>
@@ -77,12 +78,21 @@
                     <tr>
 
                         <td>Slot ${slot.id}</td>
-                        <c:forEach items="${requestScope.currentWeek.getDayList()}" var="day">
+                        <c:forEach items="${requestScope.currentWeek.getDayList()}" var="day" >
                             <td>
                                 <c:forEach items="${requestScope.sessions}" var="ses">
                                     <c:if test="${(ses.getDate().compareTo(day) eq 0 ) and(ses.getTimeslot().getId() eq slot.getId()) }">
                                         ${ses.getGroup().getName()}<br>
-                                        ${ses.getRoom().getName()}<br>
+                                        at ${ses.getRoom().getName()}<br>
+
+                                        <c:if test="${ses.getAttandances().get(0).isPresent()}">
+                                            <abbr class="attended" title="${requestScope.student.name} had attended this activity">attended</abbr><br>
+                                        </c:if>
+
+                                        <c:if test="${!ses.getAttandances().get(0).isPresent()}">
+                                            <abbr class="absent" title="${requestScope.student.name} had NOT attended this activity ">absent</abbr><br>
+                                        </c:if>
+
                                         ${ses. getTimeslot().getDescription()}<br>  
 
                                     </c:if>
@@ -95,139 +105,6 @@
 
                     </tr>
                 </c:forEach>
-
-                <!--	    	<div class="row">
-                                <tr>
-                                        <td>Slot 0</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>
-                                </tr>
-                                   </div>
-                                   <div class="row">
-                                <tr>
-                                        <td>Slot 1</td>
-                                        <td>
-                                                <a href="">IOT102-</a><br>
-                                                <abbr class="location" title="Delta building">DE-C205</abbr><br>
-                                                <abbr class="attended" title=" KhanhHDHE161639 had attended this activity">attended</abbr><br>
-                                                <span>(7:30-9:00)</span>
-                                        </td>
-                                        <td>-</td>
-                                        <td>
-                                                <a href="">IOT102-</a><br>
-                                                <abbr class="location" title="Delta building">DE-C205</abbr><br>
-                                                <abbr class="attended" title=" KhanhHDHE161639 had attended this activity">attended</abbr><br>
-                                                <span>(7:30-9:00)</span>
-                                        </td>
-                                        <td>-</td>
-                                        <td>
-                                                <a href="">IOT102-</a><br>
-                                                <abbr class="location" title="Delta building">DE-C205</abbr><br>
-                                                <abbr class="attended" title=" KhanhHDHE161639 had attended this activity">attended</abbr><br>
-                                                <span>(7:30-9:00)</span>
-                                        </td>
-                                        <td>-</td>
-                                        <td>-</td>
-                                </tr>
-                                </div>
-                                <div class="row">
-                                <tr>
-                                        <td>Slot 2</td>
-                                        <td>
-                                                <a href="">PRJ301-</a><br>
-                                                <abbr class="location" title="Delta building">DE-C205</abbr><br>
-                                                <abbr class="attended" title=" KhanhHDHE161639 had attended this activity">attended</abbr><br>
-                                                <span>(9:10-10:40)</span>
-                                        </td>
-                                        <td>
-                                                <a href="">JPD123-</a><br>
-                                                <abbr class="location" title="Delta building">DE-C203</abbr><br>
-                                                <span>(Not yet)</span><br>
-                                                <span>(9:10-10:40)</span>
-                                        </td>
-                                        <td>
-                                                <a href="">PRJ301-</a><br>
-                                                <abbr class="location" title="Delta building">DE-C205</abbr><br>
-                                                <span>(Not yet)</span><br>
-                                                <span>(9:10-10:40)</span>
-                                        </td>
-                                        <td>-</td>
-                                        <td>
-                                                <a href="">PRJ301-</a><br>
-                                                <abbr class="location" title="Delta building">DE-C205</abbr><br>
-                                                <span>(Not yet)</span><br>
-                                                <span>(9:10-10:40)</span>
-                                        </td>
-                                        <td>-</td>
-                                        <td>-</td>
-                                </tr>
-                                         </div>
-                                         <div class="row">
-                                <tr>
-                                        <td>Slot 3</td>
-                                        <td>
-                                                <a href="">MAS291-</a><br>
-                                                <abbr class="location" title="Delta building">DE-C205</abbr><br>
-                                                <abbr class="attended" title=" KhanhHDHE161639 had attended this activity">attended</abbr><br>
-                                                <span>(10:50-12:20)</span>
-                                        </td>
-                                        <td>
-                                                <a href="">JPD123-</a><br>
-                                                <abbr class="location" title="Delta building">DE-C203</abbr><br>
-                                                <abbr class="attended" title=" KhanhHDHE161639 had attended this activity">attended</abbr><br>
-                                                <span>(10:50-12:20)</span>
-                                        </td>
-                                        <td>
-                                                <a href="">MAS291-</a><br>
-                                                <abbr class="location" title="Delta building">DE-C205</abbr><br>
-                                                <abbr class="attended" title=" KhanhHDHE161639 had attended this activity">attended</abbr><br>
-                                                <span>(10:50-12:20)</span>
-                                        </td>
-                                        <td>
-                                                <a href="">JPD123-</a><br>
-                                                <abbr class="location" title="Delta building">DE-C203</abbr><br>
-                                                <span>(Not yet)</span><br>
-                                                <span>(10:50-12:20)</span>
-                                        </td>
-                                        <td>
-                                                <a href="">MAS291-</a><br>
-                                                <abbr class="location" title="Delta building">DE-C205</abbr><br>
-                                                <span>(Not yet)</span><br>
-                                                <span>(10:50-12:20)</span>
-                                        </td>
-                                        <td>
-                                                <a href="">SWE201c-</a><br>
-                                                <abbr class="location" title="Beta building">BE-301</abbr><br>
-                                                <span>(Not yet)</span><br>
-                                                <span>(10:50-12:20)</span>
-                                        </td>
-                                        <td>-</td>
-                                </tr>
-                                         </div>
-                                         <div class="row">
-                                <tr>
-                                        <td>Slot 4</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>
-                                </tr>
-                                </div>
-                                <div class="row">
-                                <tr>
-                                        <td>Slot 5</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>
-                                </tr>
-                                </div>
-                                <div class="row">
-                                <tr>
-                                        <td>Slot 6</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>
-                                </tr>
-                                         </div>
-                                         <div class="row">
-                                <tr>
-                                        <td>Slot 7</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>
-                                        </tr>
-                                </div>
-                                <div class="row">
-                                <tr>
-                                        <td>Slot 8</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>
-                                </tr>
-                                 </div>
-                            </table>
-                        </div>-->
-                </body>
-                </html>
+            </table>
+    </body>
+</html>

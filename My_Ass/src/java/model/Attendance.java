@@ -12,7 +12,7 @@ public class Attendance {
     private int id;
     private Session session;
     private Student student;
-    private boolean present;
+    private Boolean present;
     private String description;
 
     public int getId() {
@@ -39,7 +39,7 @@ public class Attendance {
         this.student = student;
     }
 
-    public boolean isPresent() {
+    public Boolean isPresent() {
         return present;
     }
 

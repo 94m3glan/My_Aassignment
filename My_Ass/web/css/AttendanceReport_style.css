@@ -3,20 +3,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to c
 Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
 */
 /* 
-    Created on : Oct 29, 2022, 8:42:44 PM
+    Created on : Oct 30, 2022, 12:44:46 AM
     Author     : HP
 */
-
-td{
-	border: thin black;
-	background-color: lightgrey;
-}
-
-th{
-	border: thin black;
-	background-color: skyblue;
-}
-
 
 body{
 	display: flex;
@@ -46,24 +35,48 @@ header img{
 	width: 10%;
 }
 
-/*tr :hover{
+
+table{
+	margin-top: 20px;
+}
+
+tr{
+	border-radius: 5px;
+}
+td{
+	border: thin black;
+	background-color: lightgrey;
+	border-radius: 5px;
+	text-align: center;
+}
+
+th{
+	border: thin black;
+	background-color: deepskyblue;
+	border-radius: 5px;
+}
+
+td.date{
+	background-color: skyblue;
+	color: white;
+	
+}
+
+td.slot{
+	background-color: orangered;
+	color: white;
+
+}
+
+td.present{
+	color:green;
+}
+
+td.absent{
+    color: red;
+}
+
+/*tr :hover {
 	background-color: darkgrey;
+	font-weight: bold;
 }*/
-
-abbr.attended{
-	text-decoration: none;
-	background-color: green;
-	border-radius: 5px;
-}
-
-abbr.absent{
-	text-decoration: none;
-	background-color: red;
-	border-radius: 5px;
-}
-
-abbr.location{
-	text-decoration: none;
-	background-color: yellow;
-	border-radius: 5px;
-}

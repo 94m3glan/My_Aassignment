@@ -4,6 +4,7 @@
  */
 package util;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -63,14 +64,35 @@ public class DateTimeHelper {
         return calendar.get(Calendar.WEEK_OF_YEAR) - 1;
     }
     
+   public static String format(Date day, String format){
+       SimpleDateFormat sdf = new SimpleDateFormat(format);
+       return sdf.format(day);
+   }
    
+    public static String getDayNameofWeek(Date day) {
+       
+        Calendar c = Calendar.getInstance();
+        c.setTime(day);
+        int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+        switch(dayOfWeek)
+        {
+            case 1: return "Sun";
+            case 2: return "Mon";
+            case 3: return "Tue";
+            case 4: return "Wed";
+            case 5: return "Thu";
+            case 6: return "Fri";
+            case 7: return "Sat";
+        }
+        return "Error";
+    }
 
 
     public static void main(String[] args) {
         ArrayList<Week> Weeks = getAllWeek();
 //        for (int i = 1; i <= 52; i++) {
 //            System.out.println("week " + i + ":" + Weeks.get(i - 1).toString());
-//            System.out.println(Weeks.get(i - 1).listDetail());
+//            System.out.println(Weeks.get(i - 1).toStringValues());
 //        }
         Week week = getWeekTime(1);
         int index = week.getIndexWeekOfYear();
