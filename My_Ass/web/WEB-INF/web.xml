@@ -16,6 +16,22 @@
         <servlet-name>AttendanceRpView</servlet-name>
         <jsp-file>/view/student/AttendanceReport.jsp</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>TakeAttendaceController</servlet-name>
+        <servlet-class>controller.lecturer.TakeAttendance</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AttendedView</servlet-name>
+        <jsp-file>/view/lecturer/Attandance/Attended.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>AddAtendanceView</servlet-name>
+        <jsp-file>/view/lecturer/Attandance/AddAttandance.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>SingleAttendanceReportController</servlet-name>
+        <servlet-class>controller.lecturer.SingleAttendanceReport</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>timetableController</servlet-name>
         <url-pattern>/student/timetable</url-pattern>
@@ -31,6 +47,22 @@
     <servlet-mapping>
         <servlet-name>AttendanceRpView</servlet-name>
         <url-pattern>/student/Report/Attendance/view</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TakeAttendaceController</servlet-name>
+        <url-pattern>/lecturer/TakeAttendace</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AttendedView</servlet-name>
+        <url-pattern>/lecturer/Attended/view</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddAtendanceView</servlet-name>
+        <url-pattern>/lecturer/addAttendance/view</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SingleAttendanceReportController</servlet-name>
+        <url-pattern>/lecturer/SingleAttendanceReport</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

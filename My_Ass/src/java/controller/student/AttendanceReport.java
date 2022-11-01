@@ -49,7 +49,7 @@ public class AttendanceReport extends HttpServlet {
             Grid = Integer.parseInt(grid);
         }
         AttendanceDBContext atdb = new AttendanceDBContext();
-        ArrayList<Attendance> atts = atdb.get(stdid, Grid);
+        ArrayList<Attendance> atts = atdb.getByStudent(stdid, Grid);
         
         req.setAttribute("student", s);
         req.setAttribute("subs", subs);
@@ -57,19 +57,19 @@ public class AttendanceReport extends HttpServlet {
         req.getRequestDispatcher("/student/Report/Attendance/view").forward(req, resp);
     }
     
-    public static void main(String[] args){
-         AttendanceDBContext atdb = new AttendanceDBContext();
-        ArrayList<Attendance> atts = atdb.get(1, 1);
-         SubjectDBContext sjdb = new SubjectDBContext();
-        ArrayList<Subject> subs = sjdb.get(1, "FALL");
-        
-        for(Subject sub : subs){
-            System.out.println("group: " + sub.getGroups().get(0).getId());
-        }
-      
-        int grid= atts.get(0).getSession().getGroup().getId();
-        
-        System.out.println("group of attendance :" +grid);
-    }
-    
+//    public static void main(String[] args){
+//         AttendanceDBContext atdb = new AttendanceDBContext();
+//        ArrayList<Attendance> atts = atdb.getByStudent(1, 1);
+//         SubjectDBContext sjdb = new SubjectDBContext();
+//        ArrayList<Subject> subs = sjdb.get(1, "FALL");
+//        
+//        for(Subject sub : subs){
+//            System.out.println("group: " + sub.getGroups().get(0).getId());
+//        }
+//      
+//        int grid= atts.get(0).getSession().getGroup().getId();
+//        
+//        System.out.println("group of attendance :" +grid);
+//    }
+//    
 }

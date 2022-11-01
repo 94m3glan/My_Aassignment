@@ -15,6 +15,8 @@ import model.Group;
 import model.Lecturer;
 import model.Room;
 import model.Session;
+import model.Student;
+import model.Subject;
 import model.TimeSlot;
 
 /**
@@ -33,6 +35,43 @@ public class AttendanceDBContext extends DBContext<Attendance> {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    public void update(ArrayList<Attendance> list) {
+        try {
+            connection.setAutoCommit(false);
+            String statement = "UPDATE [Session] SET attanded = 1 WHERE sesid = ?";
+            PreparedStatement pstm = connection.prepareStatement(statement);
+            pstm.setInt(1, list.get(0).getSession().getId());
+            pstm.executeUpdate();
+
+            for(Attendance att : list){
+            String statement2 = "UPDATE [dbo].[Attandance]\n"
+                    + "      SET \n"
+                    + "      [present] = ?"
+                    + "      ,[description] = ?\n"
+                    + "      ,[record time] = GETDATE()"
+                    + "      WHERE aid = ?		";
+            pstm = connection.prepareStatement(statement2);
+            pstm.setBoolean(1, att.isPresent());
+            pstm.setString(2, att.getDescription());
+            pstm.setInt(3, att.getId());
+            pstm.executeUpdate();
+            }
+        } catch (SQLException ex) {
+            try {
+                connection.rollback();
+            } catch (SQLException ex1) {
+                Logger.getLogger(AttendanceDBContext.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+            Logger.getLogger(AttendanceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(AttendanceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
     @Override
     public void delete(Attendance model) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -43,7 +82,7 @@ public class AttendanceDBContext extends DBContext<Attendance> {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    public ArrayList<Attendance> get(int stdid, int grid) {
+    public ArrayList<Attendance> getByStudent(int stdid, int grid) {
         ArrayList<Attendance> list = new ArrayList<>();
         try {
 
@@ -79,7 +118,7 @@ public class AttendanceDBContext extends DBContext<Attendance> {
 
                 lec.setName(rs.getString("lname"));
                 ses.setLecturer(lec);
-                
+
                 gr.setId(grid);
                 gr.setName(rs.getString("gname"));
                 ses.setGroup(gr);
@@ -94,6 +133,78 @@ public class AttendanceDBContext extends DBContext<Attendance> {
         }
         return list;
 
+    }
+
+    public ArrayList<Attendance> getByLecturer(int grid, int index) {
+        ArrayList<Attendance> list = new ArrayList<>();
+        try {
+
+            String statement = "select att.aid, ses.sesid, gr.gname, st.masv, st.stdname, att.present, att.description, lec.lname, att.[record time],\n"
+                    + "						  sub.subname, ses.tid, ses.[date], gr.sem, gr.[year],  r.rname\n"
+                    + "						  from [Session] ses join [Group] gr on ses.gid = gr.gid\n"
+                    + "						  join Attandance att on ses.sesid = att.sesid\n"
+                    + "						  join Student st on att.stdid = st.stdid\n"
+                    + "						  join Lecturer lec on ses.lid = lec.lid\n"
+                    + "						  join Subject sub on gr.subid = sub.subid\n"
+                    + "						  join Room r on ses.rid = r.rid\n"
+                    + "						  where ses.gid = ? and ses.[index] = ?";
+            PreparedStatement pstm = connection.prepareStatement(statement);
+            pstm.setInt(1, grid);
+            pstm.setInt(2, index);
+            ResultSet rs = pstm.executeQuery();
+            while (rs.next()) {
+                Session ses = new Session();
+                Group gr = new Group();
+                Student st = new Student();
+                Attendance att = new Attendance();
+                Lecturer lec = new Lecturer();
+                Subject sub = new Subject();
+                Room r = new Room();
+                TimeSlot ts = new TimeSlot();
+
+                att.setId(rs.getShort("aid"));
+
+                ses.setId(rs.getInt("sesid"));
+                ses.setDate(new java.util.Date(rs.getDate("date").getTime()));
+                att.setSession(ses);
+
+                gr.setName(rs.getString("gname"));
+                gr.setSemester(rs.getString("sem"));
+                gr.setYear(rs.getInt("year"));
+                ses.setGroup(gr);
+
+                st.setCode(rs.getString("masv"));
+                st.setName(rs.getString("stdname"));
+                att.setStudent(st);
+
+                att.setPresent(rs.getBoolean("present"));
+
+                att.setDescription(rs.getString("description"));
+
+                lec.setName(rs.getString("lname"));
+                ses.setLecturer(lec);
+
+                if (rs.getDate("record time") == null) {
+                    att.setRecord_time(null);
+                } else {
+                    att.setRecord_time(new java.util.Date(rs.getTimestamp("record time").getTime()));
+                }
+                
+                sub.setName(rs.getString("subname"));
+                gr.setSubject(sub);
+
+                ts.setId(rs.getInt("tid"));
+                ses.setTimeslot(ts);
+
+                r.setName(rs.getString("rname"));
+                ses.setRoom(r);
+
+                list.add(att);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AttendanceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
     }
 
     @Override

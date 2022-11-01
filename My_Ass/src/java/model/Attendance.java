@@ -4,6 +4,8 @@
  */
 package model;
 
+import java.util.Date;
+
 /**
  *
  * @author Ngo Tung Son
@@ -14,6 +16,7 @@ public class Attendance {
     private Student student;
     private Boolean present;
     private String description;
+    private Date record_time;
 
     public int getId() {
         return id;
@@ -55,6 +58,14 @@ public class Attendance {
         this.description = description;
     }
 
+    public Date getRecord_time() {
+        return record_time;
+    }
+
+    public void setRecord_time(Date record_time) {
+        this.record_time = record_time;
+    }
+    
     @Override
     public String toString() {
         return "Attendance{" + "id=" + id + ", session=" + session + ", student=" + student + ", present=" + present + ", description=" + description + '}';

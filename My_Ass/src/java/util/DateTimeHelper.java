@@ -86,6 +86,51 @@ public class DateTimeHelper {
         }
         return "Error";
     }
+    
+    public static Date setTime(Date day, int slot){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(day);
+        if(slot == 1){
+            calendar.set(Calendar.HOUR_OF_DAY, 7 );
+            calendar.set(Calendar.MINUTE, 30);
+            calendar.set(Calendar.SECOND, 0);
+        }
+        if(slot == 2){
+            calendar.set(Calendar.HOUR_OF_DAY, 9 );
+            calendar.set(Calendar.MINUTE, 10);
+            calendar.set(Calendar.SECOND, 0);
+        }
+        if(slot == 3){
+            calendar.set(Calendar.HOUR_OF_DAY, 10 );
+            calendar.set(Calendar.MINUTE, 50);
+            calendar.set(Calendar.SECOND, 0);
+        }
+        if(slot == 4){
+            calendar.set(Calendar.HOUR_OF_DAY, 12 );
+            calendar.set(Calendar.MINUTE, 50);
+            calendar.set(Calendar.SECOND, 0);
+        }
+        if(slot == 5){
+            calendar.set(Calendar.HOUR_OF_DAY, 14 );
+            calendar.set(Calendar.MINUTE, 30);
+            calendar.set(Calendar.SECOND, 0);
+        }
+        if(slot == 6){
+            calendar.set(Calendar.HOUR_OF_DAY, 16 );
+            calendar.set(Calendar.MINUTE, 10);
+            calendar.set(Calendar.SECOND, 0);
+        }
+        return calendar.getTime();
+    }
+    
+    public static int compareToNowByDay(Date day){
+        Date now = new Date();
+        if(removeTime(now).compareTo(removeTime(day)) == 0){
+            if(now.after(day))
+                return 0;
+        }
+        return day.compareTo(now);
+    }
 
 
     public static void main(String[] args) {

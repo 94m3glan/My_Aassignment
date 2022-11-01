@@ -16,6 +16,8 @@ public class Group {
     private ArrayList<Student> students = new ArrayList<>();
     private Subject subject;
     private Lecturer supervisor;
+    private String semester;
+    private int year;
 
     public int getId() {
         return id;
@@ -57,6 +59,22 @@ public class Group {
         this.supervisor = supervisor;
     }
 
+    public String getSemester() {
+        return semester;
+    }
+
+    public void setSemester(String semester) {
+        this.semester = semester;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+    
     @Override
     public String toString() {
         return "Group{" + "id=" + id + ", name=" + name + ", students=" + students + ", subject=" + subject + ", supervisor=" + supervisor + '}';
