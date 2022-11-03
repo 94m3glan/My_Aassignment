@@ -206,6 +206,7 @@ public class AttendanceDBContext extends DBContext<Attendance> {
         }
         return list;
     }
+    
 
     @Override
     public ArrayList<Attendance> list() {

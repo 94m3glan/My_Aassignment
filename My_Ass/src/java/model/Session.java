@@ -19,7 +19,7 @@ public class Session {
     private Date date;
     private Group group;
     private int index;
-    private boolean attandated; 
+    private Boolean attandated; 
     private ArrayList<Attendance> attandances = new ArrayList<>();
 
     public int getId() {
@@ -79,11 +79,11 @@ public class Session {
         this.index = index;
     }
 
-    public boolean isAttandated() {
+    public Boolean isAttandated() {
         return attandated;
     }
 
-    public void setAttandated(boolean attandated) {
+    public void setAttandated(Boolean attandated) {
         this.attandated = attandated;
     }
 

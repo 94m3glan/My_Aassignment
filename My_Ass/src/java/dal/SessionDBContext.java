@@ -114,9 +114,9 @@ public class SessionDBContext extends DBContext<Session> {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    public ArrayList<Session> get(int stdid, Date from, Date to) {
+    public ArrayList<Session> getByStudent(int stdid, Date from, Date to) {
         ArrayList<Session> sessions = new ArrayList<>();
-       
+
         try {
             String statement = "SELECT ses.sesid, gr.gname, r.rname, at.present, ts.tid, ts.description, ses.date  \n"
                     + "								   FROM Session ses join [Group] gr on ses.gid = gr.gid\n"
@@ -130,35 +130,91 @@ public class SessionDBContext extends DBContext<Session> {
             pstm.setDate(3, new java.sql.Date(DateTimeHelper.removeTime(to).getTime()));
             ResultSet rs = pstm.executeQuery();
             while (rs.next()) {
-             
+
                 Session ses = new Session();
                 Room r = new Room();
                 TimeSlot ts = new TimeSlot();
                 Group gr = new Group();
                 Attendance att = new Attendance();
-                
+
                 ses.setId(rs.getInt("sesid"));
-                ses.setDate( new java.util.Date(DateTimeHelper.removeTime(rs.getDate("date")).getTime()));
-                
+                ses.setDate(new java.util.Date(DateTimeHelper.removeTime(rs.getDate("date")).getTime()));
+
                 gr.setName(rs.getString("gname"));
                 ses.setGroup(gr);
-                
+
                 r.setName(rs.getString("rname"));
                 ses.setRoom(r);
-                
+
                 ts.setId(rs.getInt("tid"));
                 ts.setDescription(rs.getString("description"));
                 ses.setTimeslot(ts);
-                
+
                 att.setPresent(rs.getBoolean("present"));
                 ses.getAttandances().add(att);
-                
+
                 sessions.add(ses);
             }
         } catch (SQLException ex) {
             Logger.getLogger(SessionDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
- 
+
+        return sessions;
+    }
+
+    public ArrayList<Session> getByLecturer(int lid, Date from, Date to) {
+        ArrayList<Session> sessions = new ArrayList<>();
+
+        try {
+            String statement = "select ses.sesid, lec.lname,  gr.gname, r.rname, ses.attanded, ts.tid, ts.description, ses.date ,gr.class, sub.subname\n"
+                    + "					from Session ses \n"
+                    + "					join Lecturer lec on ses.lid = lec.lid\n"
+                    + "					join [Group] gr on ses.gid = gr.gid\n"
+                    + "					 join Room r on ses.rid = r.rid\n"
+                    + "					   join TimeSlot ts on ses.tid = ts.tid\n"
+                    + "					   join Subject sub on gr.subid = sub.subid\n"
+                    + "					where ses.lid = ? and ses.date between ? and ?";
+            PreparedStatement pstm = connection.prepareStatement(statement);
+            pstm.setInt(1, lid);
+            pstm.setDate(2, new java.sql.Date(DateTimeHelper.removeTime(from).getTime()));
+            pstm.setDate(3, new java.sql.Date(DateTimeHelper.removeTime(to).getTime()));
+            ResultSet rs = pstm.executeQuery();
+            while (rs.next()) {
+
+                Session ses = new Session();
+                Room r = new Room();
+                TimeSlot ts = new TimeSlot();
+                Group gr = new Group();
+                Lecturer lec = new Lecturer();
+                Subject sub = new Subject();
+                ses.setId(rs.getInt("sesid"));
+                ses.setDate(new java.util.Date(DateTimeHelper.removeTime(rs.getDate("date")).getTime()));
+
+                lec.setId(lid);
+                lec.setName(rs.getString("lname"));
+                ses.setLecturer(lec);
+
+                gr.setName(rs.getString("gname"));
+                gr.setClasname(rs.getString("class"));
+                ses.setGroup(gr);
+
+                r.setName(rs.getString("rname"));
+                ses.setRoom(r);
+
+                ts.setId(rs.getInt("tid"));
+                ts.setDescription(rs.getString("description"));
+                ses.setTimeslot(ts);
+
+                ses.setAttandated(rs.getBoolean("attanded"));
+
+                sub.setName(rs.getString("subname"));
+                gr.setSubject(sub);
+                sessions.add(ses);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SessionDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         return sessions;
     }
 
@@ -166,15 +222,14 @@ public class SessionDBContext extends DBContext<Session> {
     public ArrayList<Session> list() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
 //    public static void main(String[] args) throws ParseException{
 //        SessionDBContext ssdb = new SessionDBContext();
 //        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-//        ArrayList<Session> sessions = ssdb.get(1, sdf.parse("17/10/2022"), sdf.parse("23/10/2022"));
+//        ArrayList<Session> sessions = ssdb.getByStudent(1, sdf.parse("17/10/2022"), sdf.parse("23/10/2022"));
 //        
 //        for(Session ses : sessions){
 //            System.out.println(ses);
 //        }
 //    }
-
 }

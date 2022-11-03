@@ -69,16 +69,16 @@ public class TakeAttendance extends HttpServlet{
 ////        }
     }
     
-    public static void main(String[] args){
-        AttendanceDBContext atdb = new AttendanceDBContext();
-        ArrayList<Attendance> atts = atdb.getByLecturer(1, 13);
-//        
-        for(Attendance att : atts){
-            System.out.println(att.isPresent());
-        }
+//    public static void main(String[] args){
+//        AttendanceDBContext atdb = new AttendanceDBContext();
+//        ArrayList<Attendance> atts = atdb.getByLecturer(1, 13);
+////        
+//        for(Attendance att : atts){
+//            System.out.println(att.isPresent());
+//        }
 //        System.out.println("present: " + atts.get(0).isPresent());
 //        System.out.println("record time: " + DateTimeHelper.format(atts.get(0).getRecord_time(), "dd/MM/yyyy") );
-        }
+//        }
     }
     
 

@@ -54,7 +54,7 @@ public class timetable extends HttpServlet {
         ArrayList<String> daysOfWeek = currentWeek.toStringValues();
 
         SessionDBContext ssdb = new SessionDBContext();
-        ArrayList<Session> sessions = ssdb.get(stdid, new Date(currentWeek.getFrom().getTime()), new Date(currentWeek.getTo().getTime()));
+        ArrayList<Session> sessions = ssdb.getByStudent(stdid, new Date(currentWeek.getFrom().getTime()), new Date(currentWeek.getTo().getTime()));
 
         req.setAttribute("slots", slots);
         req.setAttribute("weeks", weeks);
@@ -73,7 +73,7 @@ public class timetable extends HttpServlet {
 //        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 //        SessionDBContext ssdb = new SessionDBContext();
 ////
-//        ArrayList<Session> sessions = ssdb.get(1, sdf.parse("17/10/2022"), sdf.parse("23/10/2022"));
+//        ArrayList<Session> sessions = ssdb.getByStudent(1, sdf.parse("17/10/2022"), sdf.parse("23/10/2022"));
 //////        
 ////        ArrayList<Date> dayList = currentWeek.getDayList();
 ////        for (Date dayList1 : dayList) {
@@ -81,7 +81,7 @@ public class timetable extends HttpServlet {
 ////        }
 ////
 //        for (Session ses : sessions) {
-//            System.out.println(ses.getAttandances().get(0).isPresent());
+//            System.out.println(ses.getAttandances().getByStudent(0).isPresent());
 //        }
 //        
 //    }

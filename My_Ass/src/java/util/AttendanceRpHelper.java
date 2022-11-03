@@ -14,24 +14,24 @@ import model.Attendance;
  */
 public class AttendanceRpHelper {
 
-    public static double percentAbsent(ArrayList<Attendance> atts) {
+    public static double percentAbsent(ArrayList<Attendance> atts, int num) {
         int absentCount = 0;
         int sofarCount = 0;
-        for (Attendance att : atts) {
-            if (!att.isPresent()) {
+        for (int i = 0; i < num; i++) {
+            if (!atts.get(i).isPresent()) {
                 absentCount++;
             }
-            if (att.isPresent() != null) {
+            if (atts.get(i).isPresent() != null) {
                 sofarCount++;
             }
         }
         return (double) absentCount / sofarCount * 100;
     }
 
-    public static int countAbsent(ArrayList<Attendance> atts) {
+    public static int countAbsent(ArrayList<Attendance> atts, int num) {
         int absentCount = 0;
-        for (Attendance att : atts) {
-            if (!att.isPresent()) {
+        for (int i = 0; i < num; i++) {
+            if (!atts.get(i).isPresent()) {
                 absentCount++;
             }
 

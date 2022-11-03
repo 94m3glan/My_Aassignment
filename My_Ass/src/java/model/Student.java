@@ -56,5 +56,10 @@ public class Student {
     public void setAttandances(ArrayList<Attendance> attandances) {
         this.attandances = attandances;
     }
+
+    @Override
+    public String toString() {
+        return "Student{" + "id=" + id + ", name=" + name + ", code=" + code + ", groups=" + groups + ", attandances=" + attandances + '}';
+    }
     
 }

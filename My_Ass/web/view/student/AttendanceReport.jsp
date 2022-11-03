@@ -106,7 +106,7 @@
 
             <tr>
                 <td colspan="7">
-                    ABSENT: ${AttHelper.percentAbsent(atts)}% ABSENT SO FAR (${AttHelper.countAbsent(atts)} ABSENT ON ${atts.size()} TOTAL).
+                    ABSENT: ${AttHelper.percentAbsent(atts, atts.size())}% ABSENT SO FAR (${AttHelper.countAbsent(atts,atts.size())} ABSENT ON ${atts.size()} TOTAL).
                 </td>
                 <td></td>
             </tr>
