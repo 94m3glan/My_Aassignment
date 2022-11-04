@@ -20,7 +20,11 @@
             <img src="../img/fptlogo.png">
         </header>
 
-        <h2>Check Attendance Report for group</h2>
+        <h2>Attendance Report for Group ${list.get(0).groups.get(0).classname}</h2>
+        
+        
+            <p>Attendances for ${list.get(0).groups.get(0).subject.name} with lecturer ${list.get(0).groups.get(0).supervisor.name}
+            on ${list.get(0).groups.get(0).semester} ${list.get(0).groups.get(0).year} at FU-HL</p>
 
         <table>
             <tr>
@@ -50,7 +54,11 @@
                         </c:if>
                         </td>
                     </c:forEach>
-                        <td><progress value="${100 - helper.percentAbsent(student.attandances, 6)}" max="100"></progress>${100 - helper.percentAbsent(student.attandances, 6)}%</td>
+                        <td><progress value="${100 - helper.percentAbsent(student.attandances, 6)}" max="100" ></progress><br/>
+                         ${100 - helper.percentAbsent(student.attandances, 6)}% attended so far <br/>
+                         <span style="background-color: green; border-radius: 5px;">${helper.countAttend(student.attandances, 6)} Present</span><br/>
+                         <span style="background-color: red ; border-radius: 5px;">${helper.countAbsent(student.attandances, 6)} Absent</span><br/>
+                         <span style="background-color: #ffcccc ; border-radius: 5px;">${6 - helper.countAttend(student.attandances, 6)- helper.countAbsent(student.attandances, 6)} Future</span></td>
                 </tr>
             </c:forEach>
         </table>

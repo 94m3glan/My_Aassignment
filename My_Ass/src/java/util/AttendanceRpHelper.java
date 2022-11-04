@@ -25,7 +25,8 @@ public class AttendanceRpHelper {
                 sofarCount++;
             }
         }
-        return (double) absentCount / sofarCount * 100;
+        double percent = (double) absentCount / sofarCount * 100;
+        return Math.round(percent * 100.0) / 100.0;
     }
 
     public static int countAbsent(ArrayList<Attendance> atts, int num) {
@@ -37,6 +38,17 @@ public class AttendanceRpHelper {
 
         }
         return absentCount;
+    }
+    
+    public static int countAttend(ArrayList<Attendance> atts, int num){
+        int attendCount = 0;
+        for (int i = 0; i < num; i++) {
+            if (atts.get(i).isPresent()) {
+                attendCount++;
+            }
+
+        }
+        return attendCount;
     }
 
 //    public static void main(String[] args){

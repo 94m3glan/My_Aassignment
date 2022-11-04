@@ -33,16 +33,14 @@ public class SingleAttendanceReport extends HttpServlet {
 
         AttendanceDBContext atdb = new AttendanceDBContext();
         ArrayList<Attendance> atts = atdb.getByLecturer(grid, index);
-        req.setAttribute("grid", grid);
-        req.setAttribute("index", index);
         req.setAttribute("atts", atts);
         req.getRequestDispatcher("/lecturer/Attended/view").forward(req, resp);
     }
-    public static void main(String[] args){
-         AttendanceDBContext atdb = new AttendanceDBContext();
-        ArrayList<Attendance> atts = atdb.getByLecturer(1, 13);
-        for(Attendance att : atts){
-            System.out.println("record time: "  +att.getRecord_time());
-        }
-    }
+//    public static void main(String[] args){
+//         AttendanceDBContext atdb = new AttendanceDBContext();
+//        ArrayList<Attendance> atts = atdb.getByLecturer(1, 13);
+//        for(Attendance att : atts){
+//            System.out.println("record time: "  +att.getRecord_time());
+//        }
+//    }
 }

@@ -18,7 +18,7 @@ public class Group {
     private Lecturer supervisor;
     private String semester;
     private int year;
-    private String clasname;
+    private String classname;
     public int getId() {
         return id;
     }
@@ -75,12 +75,12 @@ public class Group {
         this.year = year;
     }
 
-    public String getClasname() {
-        return clasname;
+    public String getClassname() {
+        return classname;
     }
 
-    public void setClasname(String clasname) {
-        this.clasname = clasname;
+    public void setClassname(String clasname) {
+        this.classname = clasname;
     }
     
     @Override

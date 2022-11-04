@@ -3,6 +3,7 @@
     Created on : Nov 2, 2022, 10:46:44 AM
     Author     : HP
 --%>
+<jsp:useBean id="helper" class="util.DateTimeHelper"/>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -15,7 +16,7 @@
          <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <link rel="stylesheet" href="../css/timetable_style.css"/>
+        <link href="../css/timetable_style.css" rel="stylesheet" type="text/css"/>
     
 
         <script>
@@ -85,13 +86,16 @@
                                         <c:if test="${!ses.isAttandated()}">
                                             <abbr class="absent" title="${sessions.get(0).lecturer.name} had NOT attended this activity ">Absent</abbr><br>
                                         </c:if>
-                                          <c:if test="${ses.isAttandated()}">
+                                          <c:if test="${ses.isAttandated() eq null}">
                                            Not yet<br>
                                         </c:if>
-                                        ${ses. getTimeslot().getDescription()}<br>  
-
+                                        ${ses.getTimeslot().getDescription()}<br>  
+                                        <c:if test="${helper.compareToNowByDay(ses.getDate()) <= 0}">
+                                              <a href="TakeAttendace?grid=${ses.group.id}&index=${ses.index}&lid=${lec.id}&week=${indexCurrentWeek}"><abbr class="absent" title="click here to check/take attendance for this session">attendance</abbr></a>
+                                        </c:if>
+                                      
                                     </c:if>
-
+                                     
                                 </c:forEach>
                             </td>
                         </c:forEach>

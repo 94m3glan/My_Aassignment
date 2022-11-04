@@ -16,6 +16,7 @@ import model.Lecturer;
 import model.Room;
 import model.Session;
 import model.Student;
+import model.Subject;
 import model.TimeSlot;
 
 /**
@@ -142,13 +143,20 @@ public class StudentDBContext extends DBContext<Student> {
         ArrayList<Student> list = new ArrayList<>();
         Attendance att;
         Student s;
+        Lecturer lec;
+        Group gr;
+        Subject sub;
         try {
 
-            String statement = "select s.stdid, s.masv, s.stdname, att.present \n"
-                    + "						from Attandance att join Student s on att.stdid = s.stdid\n"
-                    + "						   join Student_Group sg on s.stdid = sg.stdid\n"
-                    + "						   where sg.gid = ?\n"
-                    + "						   order by s.stdid";
+            String statement = "select std.stdid, std.masv, std.stdname ,att.present, lec.lname, gr.sem, gr.[year], gr.class, sub.subname\n"
+                    + "							from Student std \n"
+                    + "							join Student_Group sg on std.stdid = sg.stdid\n"
+                    + "							join [Group] gr on gr.gid = sg.gid\n"
+                    + "							join Attandance att on att.stdid = std.stdid\n"
+                    + "							join Lecturer lec on lec.lid = gr.lid\n"
+                    + "							join Subject sub on sub.subid = gr.subid\n"
+                    + "							where gr.gid = ?"
+                    + "                                                 order by std.stdid";
 
             PreparedStatement pstm = connection.prepareStatement(statement);
             pstm.setInt(1, grid);
@@ -161,6 +169,17 @@ public class StudentDBContext extends DBContext<Student> {
             att = new Attendance();
             att.setPresent(rs.getBoolean("present"));
             s.getAttandances().add(att);
+            gr = new Group();
+            gr.setSemester(rs.getString("sem"));
+            gr.setYear(rs.getInt("year"));
+            gr.setClassname(rs.getString("class"));
+            lec = new Lecturer();
+            lec.setName(rs.getString("lname"));
+            gr.setSupervisor(lec);
+            sub = new Subject();
+            sub.setName(rs.getString("subname"));
+            gr.setSubject(sub);
+            s.getGroups().add(gr);
             list.add(s);
             while (rs.next()) {
                 int stdid = rs.getInt("stdid");
@@ -176,13 +195,24 @@ public class StudentDBContext extends DBContext<Student> {
                     att = new Attendance();
                     att.setPresent(rs.getBoolean("present"));
                     s.getAttandances().add(att);
+                    gr = new Group();
+                    gr.setSemester(rs.getString("sem"));
+                    gr.setYear(rs.getInt("year"));
+                    gr.setClassname(rs.getString("class"));
+                    lec = new Lecturer();
+                    lec.setName(rs.getString("lname"));
+                    gr.setSupervisor(lec);
+                    sub = new Subject();
+                    sub.setName(rs.getString("subname"));
+                    gr.setSubject(sub);
+                    s.getGroups().add(gr);
                     list.add(s);
                 }
             }
         } catch (SQLException ex) {
             Logger.getLogger(StudentDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
-            return list;
+        return list;
     }
 
 }

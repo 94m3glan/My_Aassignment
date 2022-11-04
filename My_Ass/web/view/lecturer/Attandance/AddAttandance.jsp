@@ -29,8 +29,8 @@
 
         <form action="TakeAttendace" method="POST">
             <input type="hidden" name="sesid" value="${atts.get(0).session.id}"/>
-            <input type="hidden" name="grid" value="${grid}"/>
-             <input type="hidden" name="index" value="${index}"/>
+            <input type="hidden" name="lid" value="${lid}"/>
+             <input type="hidden" name="week" value="${week}"/>
             <table>
                 <tr>
                     <th>NO</th>

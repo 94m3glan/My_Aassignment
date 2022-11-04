@@ -67,3 +67,9 @@ abbr.location{
 	background-color: yellow;
 	border-radius: 5px;
 }
+
+abbr.attendance{
+    text-decoration: none;
+    background-color: #33ffcc;
+    border-radius: 5px;
+}

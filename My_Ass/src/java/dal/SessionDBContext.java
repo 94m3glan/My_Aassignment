@@ -166,7 +166,7 @@ public class SessionDBContext extends DBContext<Session> {
         ArrayList<Session> sessions = new ArrayList<>();
 
         try {
-            String statement = "select ses.sesid, lec.lname,  gr.gname, r.rname, ses.attanded, ts.tid, ts.description, ses.date ,gr.class, sub.subname\n"
+            String statement = "select ses.sesid, ses.[index], lec.lname, gr.gid, gr.gname, r.rname, ses.attanded, ts.tid, ts.description, ses.date ,gr.class, sub.subname\n"
                     + "					from Session ses \n"
                     + "					join Lecturer lec on ses.lid = lec.lid\n"
                     + "					join [Group] gr on ses.gid = gr.gid\n"
@@ -189,13 +189,15 @@ public class SessionDBContext extends DBContext<Session> {
                 Subject sub = new Subject();
                 ses.setId(rs.getInt("sesid"));
                 ses.setDate(new java.util.Date(DateTimeHelper.removeTime(rs.getDate("date")).getTime()));
-
+                ses.setIndex(rs.getInt("index"));
+                
                 lec.setId(lid);
                 lec.setName(rs.getString("lname"));
                 ses.setLecturer(lec);
-
+                
+                gr.setId(rs.getInt("gid"));
                 gr.setName(rs.getString("gname"));
-                gr.setClasname(rs.getString("class"));
+                gr.setClassname(rs.getString("class"));
                 ses.setGroup(gr);
 
                 r.setName(rs.getString("rname"));
@@ -223,13 +225,13 @@ public class SessionDBContext extends DBContext<Session> {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-//    public static void main(String[] args) throws ParseException{
-//        SessionDBContext ssdb = new SessionDBContext();
-//        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-//        ArrayList<Session> sessions = ssdb.getByStudent(1, sdf.parse("17/10/2022"), sdf.parse("23/10/2022"));
-//        
-//        for(Session ses : sessions){
-//            System.out.println(ses);
-//        }
-//    }
+    public static void main(String[] args) throws ParseException{
+        SessionDBContext ssdb = new SessionDBContext();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        ArrayList<Session> sessions = ssdb.getByStudent(1, sdf.parse("17/10/2022"), sdf.parse("23/10/2022"));
+        
+        for(Session ses : sessions){
+            System.out.println(ses);
+        }
+    }
 }

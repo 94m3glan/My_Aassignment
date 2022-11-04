@@ -59,17 +59,17 @@
                         <c:if test="${!att.isPresent()}">
                             Absent
                         </c:if>
-                    </td>
+                    </td> 
                     <td>${att.description}</td>
                     <td>${att.session.lecturer.name}</td>
                     <td>${helper.format(att.record_time, "dd/MM/yyyy hh:mm:ss")}</td>
                 </tr>
             </c:forEach>
         </table>
-        <form action="TakeAttendace" method="GET">
-             <input type="hidden" name="grid" value="${grid}"/>
-             <input type="hidden" name="index" value="${index}"/>
-             <input type="submit" value="Edit"/>
+        <form action="timetable" method="GET">
+              <input type="hidden" name="lid" value="${lid}"/>
+             <input type="hidden" name="week" value="${week}"/>
+             <input type="submit" value="Exit"/>
         </form>
     </body>
 </html>
