@@ -4,15 +4,16 @@
  */
 package controller.student;
 
+import controller.auth.BaseRoleController;
 import dal.AttendanceDBContext;
 import dal.StudentDBContext;
 import dal.SubjectDBContext;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import model.Account;
 import model.Attendance;
 import model.Student;
 import model.Subject;
@@ -21,16 +22,17 @@ import model.Subject;
  *
  * @author HP
  */
-public class AttendanceReport extends HttpServlet {
+public class AttendanceReport extends BaseRoleController {
+
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+    protected void processPost(HttpServletRequest req, HttpServletResponse resp, Account account) throws ServletException, IOException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-       int stdid = Integer.parseInt(req.getParameter("stdid"));
+    protected void processGet(HttpServletRequest req, HttpServletResponse resp, Account account) throws ServletException, IOException {
+            int stdid = Integer.parseInt(req.getParameter("stdid"));
        String sem = req.getParameter("semester");
        String grid = req.getParameter("grid");
        if(sem == null){
@@ -56,20 +58,4 @@ public class AttendanceReport extends HttpServlet {
         req.setAttribute("atts", atts);
         req.getRequestDispatcher("/student/Report/Attendance/view").forward(req, resp);
     }
-    
-//    public static void main(String[] args){
-//         AttendanceDBContext atdb = new AttendanceDBContext();
-//        ArrayList<Attendance> atts = atdb.getByStudent(1, 1);
-//         SubjectDBContext sjdb = new SubjectDBContext();
-//        ArrayList<Subject> subs = sjdb.get(1, "FALL");
-//        
-//        for(Subject sub : subs){
-//            System.out.println("group: " + sub.getGroups().get(0).getId());
-//        }
-//      
-//        int grid= atts.get(0).getSession().getGroup().getId();
-//        
-//        System.out.println("group of attendance :" +grid);
-//    }
-//    
 }

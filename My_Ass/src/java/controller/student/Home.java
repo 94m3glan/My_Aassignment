@@ -2,16 +2,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package controller.lecturer;
+package controller.student;
 
+import controller.auth.BaseAuthenticationController;
 import controller.auth.BaseRoleController;
+import dal.AccountDBContext;
 import dal.StudentDBContext;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
 import model.Account;
 import model.Student;
 
@@ -19,7 +20,7 @@ import model.Student;
  *
  * @author HP
  */
-public class CheckAttendanceReport extends BaseRoleController {
+public class Home extends BaseRoleController{
 
     @Override
     protected void processPost(HttpServletRequest req, HttpServletResponse resp, Account account) throws ServletException, IOException {
@@ -28,12 +29,16 @@ public class CheckAttendanceReport extends BaseRoleController {
 
     @Override
     protected void processGet(HttpServletRequest req, HttpServletResponse resp, Account account) throws ServletException, IOException {
-        int grid = Integer.parseInt(req.getParameter("grid"));
+        HttpSession ses = req.getSession();
+        Account acc = (Account) ses.getAttribute("account");
+        
         StudentDBContext sdb = new StudentDBContext();
-        ArrayList<Student> list = sdb.getByGroup(grid);
-        req.setAttribute("list", list);
-        req.getRequestDispatcher("/lecturer/CheckAttendanceRp/view").forward(req, resp);
+        Student s = sdb.getByAcount(acc);
+        
+        req.setAttribute("student", s);
+        req.getRequestDispatcher("/student/home/view").forward(req, resp);
     }
+
     
     
     

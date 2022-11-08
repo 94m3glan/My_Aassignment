@@ -5,21 +5,25 @@
 package controller.lecturer;
 
 import controller.auth.BaseRoleController;
+import dal.GroupDBContext;
+import dal.LecturerDBContext;
 import dal.StudentDBContext;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import model.Account;
+import model.Group;
+import model.Lecturer;
 import model.Student;
 
 /**
  *
  * @author HP
  */
-public class CheckAttendanceReport extends BaseRoleController {
+public class Home extends BaseRoleController{
 
     @Override
     protected void processPost(HttpServletRequest req, HttpServletResponse resp, Account account) throws ServletException, IOException {
@@ -28,13 +32,18 @@ public class CheckAttendanceReport extends BaseRoleController {
 
     @Override
     protected void processGet(HttpServletRequest req, HttpServletResponse resp, Account account) throws ServletException, IOException {
-        int grid = Integer.parseInt(req.getParameter("grid"));
-        StudentDBContext sdb = new StudentDBContext();
-        ArrayList<Student> list = sdb.getByGroup(grid);
-        req.setAttribute("list", list);
-        req.getRequestDispatcher("/lecturer/CheckAttendanceRp/view").forward(req, resp);
+        HttpSession ses = req.getSession();
+        Account acc = (Account) ses.getAttribute("account");
+        
+        LecturerDBContext ldb = new LecturerDBContext();
+        Lecturer lec = ldb.getByAccount(acc);
+        
+        GroupDBContext grdb = new GroupDBContext();
+        ArrayList<Group> grs = grdb.getByLecturer(lec);
+        
+        req.setAttribute("groups", grs);
+        req.setAttribute("lecturer", lec);
+        req.getRequestDispatcher("/lecturer/home/view").forward(req, resp);
     }
-    
-    
     
 }

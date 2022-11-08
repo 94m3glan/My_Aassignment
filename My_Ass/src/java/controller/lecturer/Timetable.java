@@ -1,6 +1,7 @@
 package controller.lecturer;
 
 
+import controller.auth.BaseRoleController;
 import dal.LecturerDBContext;
 import dal.SessionDBContext;
 import dal.StudentDBContext;
@@ -12,6 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import model.Account;
 import model.Lecturer;
 import model.Session;
 import model.TimeSlot;
@@ -27,15 +29,16 @@ import util.DateTimeHelper;
  *
  * @author HP
  */
-public class Timetable extends HttpServlet{
+public class Timetable extends BaseRoleController{
+
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+    protected void processPost(HttpServletRequest req, HttpServletResponse resp, Account account) throws ServletException, IOException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void processGet(HttpServletRequest req, HttpServletResponse resp, Account account) throws ServletException, IOException {
         int lid = Integer.parseInt(req.getParameter("lid"));
         String paramWeek = req.getParameter("week");
         ArrayList<Week> weeks = DateTimeHelper.getAllWeek();

@@ -4,6 +4,7 @@
  */
 package controller.lecturer;
 
+import controller.auth.BaseRoleController;
 import dal.AttendanceDBContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -12,6 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import model.Account;
 import model.Attendance;
 import model.Session;
 import util.DateTimeHelper;
@@ -20,11 +22,11 @@ import util.DateTimeHelper;
  *
  * @author HP
  */
-public class TakeAttendance extends HttpServlet {
+public class TakeAttendance extends BaseRoleController {
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ArrayList<Attendance> atts = new ArrayList<>();
+    protected void processPost(HttpServletRequest req, HttpServletResponse resp, Account account) throws ServletException, IOException {
+            ArrayList<Attendance> atts = new ArrayList<>();
         int lid = Integer.parseInt(req.getParameter("lid"));
         int week = Integer.parseInt(req.getParameter("week"));
 
@@ -46,7 +48,7 @@ public class TakeAttendance extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void processGet(HttpServletRequest req, HttpServletResponse resp, Account account) throws ServletException, IOException {
         int grid = Integer.parseInt(req.getParameter("grid"));
         int index = Integer.parseInt(req.getParameter("index"));
         int lid = Integer.parseInt(req.getParameter("lid"));
@@ -69,15 +71,4 @@ public class TakeAttendance extends HttpServlet {
             req.getRequestDispatcher("/lecturer/addAttendance/view").forward(req, resp);
         }
     }
-
-//    public static void main(String[] args){
-//        AttendanceDBContext atdb = new AttendanceDBContext();
-//        ArrayList<Attendance> atts = atdb.getByLecturer(1, 13);
-////        
-//        for(Attendance att : atts){
-//            System.out.println(att.isPresent());
-//        }
-//        System.out.println("present: " + atts.get(0).isPresent());
-//        System.out.println("record time: " + DateTimeHelper.format(atts.get(0).getRecord_time(), "dd/MM/yyyy") );
-//        }
 }

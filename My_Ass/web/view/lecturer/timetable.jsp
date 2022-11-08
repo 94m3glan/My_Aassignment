@@ -28,7 +28,7 @@
     </head>
     <body>
         <header>
-            <nav><a href="">Home</a></nav>
+            <nav><a href="home">Home</a></nav>
             <h1>FPT University Academic Portal</h1>
             <img src="../img/fptlogo.png">
         </header>

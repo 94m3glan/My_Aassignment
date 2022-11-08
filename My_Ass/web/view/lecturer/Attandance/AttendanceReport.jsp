@@ -37,14 +37,18 @@
                 <th>Slot 4</th>
                 <th>Slot 5</th>
                 <th>Slot 6</th>
+                <th>Slot 7</th>
+                <th>Slot 8</th>
+                <th>Slot 9</th>
+                
                 <th>Status</th>
             </tr>
-            <c:forEach items="${list}" var="student">
+            <c:forEach items="${list}" var="student" end="4">
                 <tr>
                     <td>${list.indexOf(student) + 1}</td>
                     <td>${student.code}</td>
                     <td>${student.name}</td>
-                    <c:forEach items="${student.attandances}"  var="att" end="5">
+                    <c:forEach items="${student.attandances}"  var="att" end="8">
                         <td>
                         <c:if test="${att.isPresent()}">
                             <img src="../img/check-icon.jpg" alt="attend" style="width: 40%"/>
@@ -54,11 +58,11 @@
                         </c:if>
                         </td>
                     </c:forEach>
-                        <td><progress value="${100 - helper.percentAbsent(student.attandances, 6)}" max="100" ></progress><br/>
-                         ${100 - helper.percentAbsent(student.attandances, 6)}% attended so far <br/>
-                         <span style="background-color: green; border-radius: 5px;">${helper.countAttend(student.attandances, 6)} Present</span><br/>
-                         <span style="background-color: red ; border-radius: 5px;">${helper.countAbsent(student.attandances, 6)} Absent</span><br/>
-                         <span style="background-color: #ffcccc ; border-radius: 5px;">${6 - helper.countAttend(student.attandances, 6)- helper.countAbsent(student.attandances, 6)} Future</span></td>
+                        <td><progress value="${100 - helper.percentAbsent(student.attandances, 9)}" max="100" ></progress><br/>
+                         ${100 - helper.percentAbsent(student.attandances, 9)}% attended so far <br/>
+                         <span style="background-color: green; border-radius: 5px;">${helper.countAttend(student.attandances, 9)} Present</span><br/>
+                         <span style="background-color: red ; border-radius: 5px;">${helper.countAbsent(student.attandances, 9)} Absent</span><br/>
+                         <span style="background-color: #ffcccc ; border-radius: 5px;">${9 - helper.countAttend(student.attandances, 9)- helper.countAbsent(student.attandances, 9)} Future</span></td>
                 </tr>
             </c:forEach>
         </table>

@@ -10,73 +10,58 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.Account;
+import model.Group;
 import model.Lecturer;
 
 /**
  *
- * @author Ngo Tung Son
+ * @author HP
  */
-public class LecturerDBContext extends DBContext<Lecturer> {
+public class GroupDBContext extends DBContext<Group> {
 
     @Override
-    public void insert(Lecturer model) {
+    public void insert(Group model) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void update(Lecturer model) {
+    public void update(Group model) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void delete(Lecturer model) {
+    public void delete(Group model) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Lecturer get(int id) {
+    public Group get(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public ArrayList<Group> list() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+    public ArrayList<Group> getByLecturer(Lecturer lec){
+        ArrayList<Group> grs = new ArrayList<>();
         try {
-            String sql = "SELECT lid,lname FROM Lecturer WHERE lid = ?";
-            PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, id);
-            ResultSet rs = stm.executeQuery();
-            if(rs.next())
-            {
-                Lecturer l = new Lecturer();
-                l.setId(rs.getInt("lid"));
-                l.setName(rs.getString("lname"));
-                return l;
+            String statement = "select g.gid, g.gname from [Group] g join Lecturer l on g.lid = l.lid where l.lid = ?";
+            PreparedStatement pstm = connection.prepareStatement(statement);
+            pstm.setInt(1, lec.getId());
+            ResultSet rs = pstm.executeQuery();
+            while(rs.next()){
+                Group gr = new Group();
+                gr.setId(rs.getInt("gid"));
+                gr.setName(rs.getString("gname"));
+                grs.add(gr);
             }
+            return grs;
         } catch (SQLException ex) {
-            Logger.getLogger(LecturerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GroupDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
-
-    @Override
-    public ArrayList<Lecturer> list() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-    
-    public Lecturer getByAccount(Account acc){
-        Lecturer lec = new Lecturer();
-        try {
-            String statement = "select lec.lid, lec.lname from Lecturer lec join Account a on lec.lid = a.lid where a.lid = ?";
-            PreparedStatement pstm = connection.prepareStatement(statement);
-            pstm.setInt(1, acc.getLid());
-            ResultSet rs = pstm.executeQuery();
-            while(rs.next()){
-                lec.setId(rs.getInt("lid"));
-                lec.setName(rs.getString("lname"));
-              
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(StudentDBContext.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return lec;
-    }
-    
-
     
 }

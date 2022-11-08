@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Account;
 import model.Attendance;
 import model.Group;
 import model.Lecturer;
@@ -213,6 +214,24 @@ public class StudentDBContext extends DBContext<Student> {
             Logger.getLogger(StudentDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
+    }
+    
+    public Student getByAcount(Account acc){
+        Student s = new Student();
+        try {
+            String statement = "select s.stdid, s.stdname, s.masv from Student s join Account a on s.stdid = a.stdid where a.stdid = ?";
+            PreparedStatement pstm = connection.prepareStatement(statement);
+            pstm.setInt(1, acc.getStdid());
+            ResultSet rs = pstm.executeQuery();
+            while(rs.next()){
+                s.setId(rs.getInt("stdid"));
+                s.setName(rs.getString("stdname"));
+                s.setCode(rs.getString("masv"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(StudentDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return s;
     }
 
 }

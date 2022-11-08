@@ -29,10 +29,6 @@
         <jsp-file>/view/lecturer/Attandance/AddAttandance.jsp</jsp-file>
     </servlet>
     <servlet>
-        <servlet-name>SingleAttendanceReportController</servlet-name>
-        <servlet-class>controller.lecturer.SingleAttendanceReport</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>lecturerTimetableController</servlet-name>
         <servlet-class>controller.lecturer.Timetable</servlet-class>
     </servlet>
@@ -47,6 +43,34 @@
     <servlet>
         <servlet-name>AttendanceReportView</servlet-name>
         <jsp-file>/view/lecturer/Attandance/AttendanceReport.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>loginController</servlet-name>
+        <servlet-class>controller.auth.LoginController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>logoutController</servlet-name>
+        <servlet-class>controller.auth.LogoutController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>loginView</servlet-name>
+        <jsp-file>/view/auth/login.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>StudentHomeController</servlet-name>
+        <servlet-class>controller.student.Home</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StudentHomeView</servlet-name>
+        <jsp-file>/view/student/Home.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>LecturerHomeController</servlet-name>
+        <servlet-class>controller.lecturer.Home</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LecturerHomeView</servlet-name>
+        <jsp-file>/view/lecturer/Home.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
         <servlet-name>timetableController</servlet-name>
@@ -77,10 +101,6 @@
         <url-pattern>/lecturer/addAttendance/view</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>SingleAttendanceReportController</servlet-name>
-        <url-pattern>/lecturer/SingleAttendanceReport</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>lecturerTimetableController</servlet-name>
         <url-pattern>/lecturer/timetable</url-pattern>
     </servlet-mapping>
@@ -95,6 +115,34 @@
     <servlet-mapping>
         <servlet-name>AttendanceReportView</servlet-name>
         <url-pattern>/lecturer/CheckAttendanceRp/view</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loginController</servlet-name>
+        <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>logoutController</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loginView</servlet-name>
+        <url-pattern>/login/view</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StudentHomeController</servlet-name>
+        <url-pattern>/student/home</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StudentHomeView</servlet-name>
+        <url-pattern>/student/home/view</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LecturerHomeController</servlet-name>
+        <url-pattern>/lecturer/home</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LecturerHomeView</servlet-name>
+        <url-pattern>/lecturer/home/view</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
